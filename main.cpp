@@ -27,6 +27,7 @@ float seperate = 1;
 float cohere = 1;
 float cursorForce = 1;
 bool bounce = 0;
+bool paused = 0;
 v2d mouseVec;
 v2d mouseVel;
 uint16_t hues [16] = {224,225,226,227,228,228,230,231,199,167,135,103,71,79,87,95};
@@ -35,7 +36,19 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius);
 
 void SDL_RenderHollowCircle(SDL_Renderer * renderer, int centreX, int centreY, int radius);
 
+struct RGB {
+    uint8_t a;
+    uint8_t b;
+    uint8_t g;
+    uint8_t r;
+};
 
+RGB hexToRGB(uint32_t hex){
+    union RGBA { uint32_t hex; RGB parts;} rgba;
+    rgba.hex = hex;
+    rgba.hex <<= 8;
+    return rgba.parts;
+}
 
 struct rgb{
     rgb(int R, int G, int B){
@@ -161,24 +174,24 @@ struct Boid {
             if (target == this) continue;
         // Distance to boid
             float d;
-        // Skip recalculation of distance if possible
-            if (index > target->index) {
-                int j = target->neighbors.Find(index);
-                if ((j + 1) > 0) {
-                    d = target->dists[j];
-                }
-                else continue;
-            }
-        // Calculate the distance to the boid
-            else d = pos.sqrDist(target->pos);
-            temp = pos - target->pos;
+        // // Skip recalculation of distance if possible
+        //     if (index > target->index) {
+        //         int j = target->neighbors.Find(index);
+        //         if ((j + 1) > 0) {
+        //             d = target->dists[j];
+        //         }
+        //         else continue;
+        //     }
+        // // Calculate the distance to the boid
+        //     else 
+            d = pos.sqrDist(target->pos);
         // Push found neighbors
             if (d <= sqVis) {
-                neighbors.PushBack(index);
-                dists.PushBack(d);
+                //neighbors.PushBack(index);
+                //dists.PushBack(d);
                     aln += target->vel;
                     csn += target->pos;
-                    sep = temp / d;
+                    sep = (pos - target->pos) / d;
                 total++;
             }
         }
@@ -190,19 +203,20 @@ struct Boid {
             aln.limit(maxForce);
         // Limit cohesion force
             //csn = (csn / total) - pos;
-            csn = (csn / (float)total) - pos;
+            csn /= (float)total;
+            csn -= pos;
             csn.setLen(maxSpeed);
-            csn -= temp;
+            csn -= vel;
             csn.limit(maxForce);
         // Limit seperation force
             sep.setLen(maxSpeed);
-            sep -= temp;
+            sep -= vel;
             sep.limit(maxForce);
         }
     // Apply all forces to acceleration
-        //acc = acc + (aln * align);
-        //acc = acc + (csn * cohere);
-        acc = acc + (sep * seperate);
+        acc += (aln * align);
+        acc += (csn * cohere);
+        acc += (sep * seperate);
 
     }
 
@@ -224,14 +238,27 @@ struct Boid {
 
     void draw(SDL_Renderer* renderer){
         v2d lineEnd((pos + vel * 5));
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255 );
-        if(pos.x < width && pos.y < height){
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
-            lineEnd = ((pos + sep * 50));
-            std::cout << lineEnd.x << ',' << lineEnd.y << '\n';
-            SDL_SetRenderDrawColor(renderer, 100, 0, 100, 255 );
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
-        }
+        RGB drawColor;
+        drawColor = hexToRGB(0x646464);
+        SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, 255 );
+        // if(pos.x < width && pos.y < height){
+        //     SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
+        //     //std::cout << lineEnd.x << ',' << lineEnd.y << '\n';
+        //     lineEnd = ((pos + aln * 30));
+        //     drawColor = hexToRGB(0xFEA3AA);
+        //     SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, 255 );
+        //     SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
+
+        //     lineEnd = ((pos + csn * 30));
+        //     drawColor = hexToRGB(0xBAED91);
+        //     SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, 255 );
+        //     SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
+
+        //     lineEnd = ((pos + sep * 30));
+        //     drawColor = hexToRGB(0xB2CEFE);
+        //     SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, 255 );
+        //     SDL_RenderDrawLine(renderer, pos.x, pos.y, lineEnd.x, lineEnd.y);
+        // }
         // SDL_Rect r;
         // r.x = pos.x - 2.5f;
         // r.y = pos.y - 2.5f;
@@ -239,8 +266,8 @@ struct Boid {
         // r.h = 5;
         float speed = vel.len()*(190/maxSpeed);
         rgb color = HSVtoRGB(speed>360?360:speed, 100.0f, 100.0f);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100 );
-        SDL_RenderHollowCircle(renderer, pos.x, pos.y, vis);
+        // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100 );
+        // SDL_RenderHollowCircle(renderer, pos.x, pos.y, vis);
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255 );
         SDL_RenderFillCircle(renderer, pos.x, pos.y, 2);
 
@@ -276,7 +303,7 @@ void modifyBoids(Vector <Boid*> & _flock, uint16_t newCount, uint16_t oldCount){
 }
 
 extern "C" {
-    int setValues(float _vis, float _maxSpeed, float _maxForce, float _align, float _cohere, float _seperate, int _boidCount) {
+    int setValues(float _vis, float _maxSpeed, float _maxForce, float _align, float _cohere, float _seperate, int _boidCount, int _paused) {
         vis = _vis;
         sqVis = vis*vis;
         maxSpeed = _maxSpeed;
@@ -287,6 +314,7 @@ extern "C" {
         cohere = _cohere;
         modifyBoids(flock, _boidCount, boidCount);
         boidCount = _boidCount;
+        paused = _paused;
         //std::cout << flock.Size() << '\n';
         //boidCount = _boidCount;
         //std::cout << vis << ',' << maxSpeed << ',' << (int)maxForce << ',' << align << ',' << cohere << ',' << seperate << ',' << boidCount << '\n';
@@ -394,6 +422,7 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius)
     return status;
 }
 
+
 void mainloop(void *arg)
 {
     setScreenSize();
@@ -404,17 +433,28 @@ void mainloop(void *arg)
     //std::cout << width << ',' << height << '\n';
     // SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
     // example: draw a moving rectangle
+    // SDL_SetRenderDrawColor(renderer, 23, 22, 21, 255);
+
         // Calculate forces on all boids
+    if(!paused){
         for (uint16_t i = 1; i < (uint16_t)boidCount-1; i++) {
             flock[i]->flock(flock);
             //std::cout << i << '\n';
         }
+        RGB bg = hexToRGB(0x171615);
+        SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, 255);
+        SDL_RenderClear(renderer);
+        drawAll(flock, renderer);
+        std::cout << flock[10]->pos.x << '\n';
+    }
         //usleep(100000);
     // Update boid positions and draw
     // red background
-    SDL_SetRenderDrawColor(renderer, 21, 22, 23, 255);
-    SDL_RenderClear(renderer);
-    drawAll(flock, renderer);
+    //uint24_t bg_color = 0x171615;
+    // union RGBA { uint32_t hex; struct components {uint8_t a; uint8_t b; uint8_t g; uint8_t r;} parts;} bg;
+    // //hex bg = {0x171615};
+    // bg.hex = 0x7939B9;
+    // bg.hex <<= 8;
 
     // moving blue rectangle
 

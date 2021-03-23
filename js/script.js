@@ -16,7 +16,7 @@ let fps = 0, fpsA = [];
 let nextFrame = false;
 
 function setup() {
-	setValues = Module.cwrap('setValues', 'number', ['number','number','number','number','number','number','number',]);
+	setValues = Module.cwrap('setValues', 'number', ['number','number','number','number','number','number','number','number']);
 	// cont = select('#container');
 
 	// cont.mouseOver(() => mouseIsOver = false);
@@ -38,7 +38,7 @@ function setup() {
 function draw() {
 	//console.log(opt.separation);
 	//setValues(opt.vision,opt.maxSpeed,opt.maxForce,opt.alignment,opt.cohesion,opt.separation,600);
-	setValues(opt.vision, opt.maxSpeed, opt.maxForce, opt.alignment, opt.cohesion, opt.separation, opt.boids);
+	setValues(opt.vision, opt.maxSpeed, opt.maxForce, opt.alignment, opt.cohesion, opt.separation, opt.boids, opt.paused);
 	// mouseForce = opt.maxSpeed *
 	// 	opt.maxForce *
 	// 	(opt.alignment + opt.cohesion + opt.separation + 1) / 12;
