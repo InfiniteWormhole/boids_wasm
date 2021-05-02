@@ -1,12 +1,5 @@
-float randMapped() {
-    return(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
-}
-
-float inv_sqrt(float x)
-{ union { float f; uint32_t u; } y = {x};
-  y.u = 0x5F1FFFF9ul - (y.u >> 1);
-  return 0.703952253f * y.f * (2.38924456f - x * y.f * y.f);
-}
+#pragma once
+#include <math.h>
 
 struct v2d {
     //Create an empty vector
@@ -71,4 +64,14 @@ struct v2d {
 
     float x;
     float y;
+
+	static float randMapped() {
+    return(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+	}
+
+	static float inv_sqrt(float x) { 
+	union { float f; uint32_t u; } y = {x};
+	y.u = 0x5F1FFFF9ul - (y.u >> 1);
+	return 0.703952253f * y.f * (2.38924456f - x * y.f * y.f);
+	}
 };
