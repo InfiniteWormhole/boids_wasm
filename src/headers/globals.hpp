@@ -2,9 +2,11 @@
 
 #include <emscripten.h>
 
-#define GL_GLEXT_PROTOTYPES
-#define EGL_EGLEXT_PROTOTYPES
+#define GLFW_INCLUDE_ES3
 #include <GLFW/glfw3.h>
+#include <GLES3/gl3.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
 
 #include "settings.hpp"
 

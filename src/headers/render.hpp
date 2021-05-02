@@ -7,7 +7,9 @@
 
 extern GLfloat vertices[12];
 
-static std::string read_shader_file(const std::__fs::filesystem::path::value_type *shader_file);
+extern GLuint VAO;
+
+extern std::string read_shader_file(const std::__fs::filesystem::path::value_type *shader_file);
 
 extern GLuint compileShaders(std::string vertShader, std::string fragShader);
 

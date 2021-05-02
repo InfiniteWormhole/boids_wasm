@@ -10,7 +10,7 @@ float vertices[] = {
 };
 
 // Shader sources
-static std::string read_shader_file(
+std::string read_shader_file(
 	const std::__fs::filesystem::path::value_type *shader_file)
 {
 	std::ifstream ifs;
@@ -35,11 +35,11 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 	GLchar *gridFragmentSource = (char *)fragShader.c_str();
 
 	// Create a Vertex Buffer Object and copy the vertex data to it
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
+	// GLuint vbo;
+	// glGenBuffers(1, &vbo);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	// glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// Create and compile the vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -56,21 +56,25 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	// glUseProgram(shaderProgram);
+	// glDeleteShader(vertexShader);
+	// glDeleteShader(fragmentShader);
 	return shaderProgram;
 }
+
+GLuint VAO;
 
 GLFWwindow *initGL()
 {
 	glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
-	GLFWwindow *window = glfwCreateWindow(800, 600, "Boids", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(1920, 1080, "Boids", NULL, NULL);
 	glfwMakeContextCurrent(window);
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 1920, 1080);
+	// glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 
 	unsigned int VBO;
 	glGenBuffers(1, &VBO); 
@@ -78,6 +82,13 @@ GLFWwindow *initGL()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	
+
+	glGenVertexArrays(1, &VAO); 
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);  
+	glBindVertexArray(VAO);
 	return window;
 }

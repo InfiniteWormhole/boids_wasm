@@ -38,6 +38,7 @@ void mainloop(void *arg)
 		RGB bg = RGB::hexToRGB(0x171615);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		lvl->draw();
 	}
 	glfwSwapBuffers(window);
@@ -52,6 +53,12 @@ int main()
 
 	// Initializing OpenGL and GLFW
 	GLFWwindow *window = initGL();
+	std::string triVert = read_shader_file("src/shaders/tri.vert");
+	std::string triFrag = read_shader_file("src/shaders/tri.frag");
+	GLuint triShader = compileShaders(triVert, triFrag);
+	std::cout << triShader << '\n';
+	glUseProgram(triShader);
+	glBindVertexArray(VAO);
 	// SDL_Init(SDL_INIT_VIDEO);
 	// SDL_Window *window;
 	// SDL_Renderer *renderer;
