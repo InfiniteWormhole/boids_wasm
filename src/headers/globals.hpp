@@ -17,4 +17,8 @@ extern Settings stg;
 extern Level* lvl;
 extern void setScreenSize();
 
-extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float maxForce, float align, float cohere, float seperate, int boidCount, int paused);
+constexpr uint32_t maxCount = 1000000;
+extern float g_particule_position_size_data[4 * maxCount];
+extern GLubyte g_particule_color_data[4 * maxCount];
+
+extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float maxForce, float align, float cohere, float seperate, int boidCount, float size, float drag, int paused, int particles);

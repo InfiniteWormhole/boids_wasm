@@ -8,7 +8,7 @@ class Boid {
 
 public:
 // Construct new boid with random location and position with index of _index
-    Boid(uint16_t _index) {
+    Boid(int _index) {
         index = _index;
         pos = v2d(rand() % stg.width, rand() % stg.height);
         vel.randomize(stg.maxSpeed);
@@ -20,13 +20,13 @@ public:
     }
 
 public:
-	void flock(std::vector<Boid*>& boids);
+	void flock(std::vector<std::unique_ptr<Boid>>& boids);
 	void update();
 	void draw();
 	void cursor(bool explode);
 
 private:
-    uint16_t index;
+    int index;
     v2d pos;
     v2d vel;
     v2d acc;
@@ -34,6 +34,6 @@ private:
     v2d csn;
     v2d sep;
     v2d temp;
-    std::vector<uint16_t> neighbors;
-    std::vector<float> dists;
+    // std::vector<int> neighbors;
+    // std::vector<float> dists;
 };

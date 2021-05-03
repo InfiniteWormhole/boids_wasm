@@ -50,7 +50,6 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &gridFragmentSource, nullptr);
 	glCompileShader(fragmentShader);
-
 	// Link the vertex and fragment shader into a shader program
 	GLuint shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
@@ -63,6 +62,9 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 }
 
 GLuint VAO;
+GLuint particles_position_buffer;
+GLuint particles_color_buffer;
+GLuint billboard_vertex_buffer;
 
 GLFWwindow *initGL()
 {
@@ -70,10 +72,11 @@ GLFWwindow *initGL()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
-	GLFWwindow *window = glfwCreateWindow(1920, 1080, "Boids", NULL, NULL);
+	setScreenSize();
+	GLFWwindow *window = glfwCreateWindow(stg.width, stg.height, "Boids", NULL, NULL);
 	glfwMakeContextCurrent(window);
-	glViewport(0, 0, 1920, 1080);
+	glViewport(0, 0, stg.width, stg.height);
+	
 	// glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 
 	unsigned int VBO;
@@ -90,5 +93,29 @@ GLFWwindow *initGL()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);  
 	glBindVertexArray(VAO);
+	constexpr float size = 0.05;
+	float aspect = static_cast<float>(stg.height) / static_cast<float>(stg.width);
+	static const GLfloat g_vertex_buffer_data[] = {
+	-(size * aspect), -(size), 0.0f,
+	 (size * aspect), -(size), 0.0f,
+	-(size * aspect),  (size), 0.0f,
+	 (size * aspect),  (size), 0.0f,
+	};
+	glGenBuffers(1, &billboard_vertex_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+	// The VBO containing the positions and sizes of the particles
+	glGenBuffers(1, &particles_position_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
+	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	glBufferData(GL_ARRAY_BUFFER, maxCount * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+
+	// The VBO containing the colors of the particles
+	glGenBuffers(1, &particles_color_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
+	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	glBufferData(GL_ARRAY_BUFFER, maxCount * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
+
 	return window;
 }

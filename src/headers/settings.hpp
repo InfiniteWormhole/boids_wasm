@@ -14,7 +14,9 @@ struct Settings
 	float maxSpeed = 8;
 	float maxForce = 0.2f;
 
-	uint16_t boidCount = 400;
+	uint32_t boidCount = 400;
+	float size;
+	float drag;
 
 	float align = 1;
 	float seperate = 1;
@@ -23,6 +25,7 @@ struct Settings
 
 	bool bounce = 0;
 	bool paused = 0;
+	bool particles = 0;
 	v2d mouseVec;
 	v2d mouseVel;
 };

@@ -9,10 +9,10 @@ class Boid;
 class Level
 {
 public:
-	void modifyBoids(uint16_t newCount, uint16_t oldCount);
+	void modifyBoids(int newCount, int oldCount);
 	void flock();
 	void draw();
 	void populate();
 private:
-	std::vector<Boid*> boids;
+	std::vector<std::unique_ptr<Boid>> boids;
 };

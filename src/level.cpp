@@ -1,21 +1,22 @@
 #include "headers/level.hpp"
 #include "headers/boid.hpp"
 
-void Level::modifyBoids(uint16_t newCount, uint16_t oldCount)
+void Level::modifyBoids(int newCount, int oldCount)
 {
 	if (newCount > oldCount)
 	{
-		for (uint16_t i = 1; i < newCount - oldCount; i++)
+		for (int i = 1; i < newCount - oldCount; i++)
 		{
-			boids.push_back(new Boid(oldCount + i));
+			boids.push_back(std::make_unique<Boid>(oldCount + i));
 		}
 	}
 	else if (newCount < oldCount)
 	{
-		for (uint16_t i = newCount; i < oldCount; i++)
-		{
-			boids.pop_back();
-		}
+		// for (int i = newCount; i < oldCount; i++)
+		// {
+		// 	boids.pop_back();
+		// }
+		boids.erase(boids.begin() + newCount, boids.end());
 	}
 }
 
@@ -23,7 +24,7 @@ void Level::populate()
 {
 	for (int i = 0; i < stg.boidCount; i++)
 	{
-		boids.push_back(new Boid(i));
+		boids.push_back(std::make_unique<Boid>(i));
 	}
 }
 
@@ -37,7 +38,7 @@ void Level::flock()
 
 void Level::draw()
 {
-	for (uint16_t i = 1; i < (stg.boidCount - 1); i++)
+	for (int i = 1; i < (stg.boidCount - 1); i++)
 	{
 		// Update boid position
 		boids[i]->update();

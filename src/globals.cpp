@@ -13,8 +13,9 @@ Settings stg = {
 
 	8,  		// maxSpeed
 	0.2f,  		// maxForce
-
-	400,  		// boidCount
+	300,  		// boidCount
+	0.5f,		// boid size
+	0.05,		// drag
 
 	1,  		// align
 	1,  		// seperate
@@ -23,7 +24,11 @@ Settings stg = {
 	
 	0,  		// bounce
 	0,  		// paused
+	0			// particle mode
 };
+
+float g_particule_position_size_data[4 * maxCount] = {-1};
+GLubyte g_particule_color_data[4 * maxCount] = {0};
 
 void setScreenSize(){
     stg.width = (uint16_t)EM_ASM_INT({
@@ -40,7 +45,8 @@ void setScreenSize(){
     });
 }
 
-extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float maxForce, float align, float cohere, float seperate, int boidCount, int paused) {
+extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float maxForce, float align, float cohere, float seperate, int boidCount, float size, float drag, int paused, int particles)
+{
 	stg.vis = vis;
 	stg.sqVis = stg.vis*stg.vis;
 	stg.maxSpeed = maxSpeed;
@@ -50,7 +56,10 @@ extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float m
 	stg.cohere = cohere;
 	lvl->modifyBoids(boidCount, stg.boidCount);
 	stg.boidCount = boidCount;
+	stg.size = size;
+	stg.drag = drag;
 	stg.paused = paused;
+	stg.particles = particles;
 	//stg.boidCount = boidCount;
 	return stg.align;
 };
