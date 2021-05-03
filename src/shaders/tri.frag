@@ -26,7 +26,7 @@ void main()
 	// FragColor.a = 1.0;
 	FragColor.a = aastep(-(size) * 2.0, -1.0 * length(coord.xyz * vec3(1.0, aspect, 1.0))*100.0);
 	//FragColor.a += aastep(-5.0, -1.0 * length(coord.xyz * vec3(1.0, aspect, 1.0))*100.0)/6.0;
-	FragColor.a += 0.2;
+	// FragColor.a += 0.2;
 	if(FragColor.a == 0.0)
 	{
 		discard;
