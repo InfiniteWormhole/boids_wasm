@@ -3,5 +3,3 @@
 # *.cpp
 .vscode
 SDL2
-js
-lib
