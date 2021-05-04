@@ -13,6 +13,10 @@ public:
 	void flock();
 	void draw();
 	void populate();
+	void setMouse(v2d pos, bool button, bool pressed);
 private:
 	std::vector<std::unique_ptr<Boid>> boids;
+	v2d mousePos;
+	bool mousePressed;
+	bool mouseButton;
 };

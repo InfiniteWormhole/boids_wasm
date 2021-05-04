@@ -1,6 +1,7 @@
 #include "headers/boid.hpp"
 #include "headers/rgb.hpp"
-#include <SDL.h>
+#include "headers/level.hpp"
+
 // Calculate forces based on neighbors
 void Boid::flock(std::vector<std::unique_ptr<Boid>>& boids) {
 // Zero all force vectors and neighbors
@@ -66,7 +67,11 @@ void Boid::flock(std::vector<std::unique_ptr<Boid>>& boids) {
 
 }
 
-void Boid::update() {
+void Boid::update(v2d mousePos, bool mousePressed) {
+	if(mousePressed)
+	{
+		cursor(mousePos, 0);
+	}
 	vel += acc;
 	acc.zero();
 	vel.limit(stg.maxSpeed);
@@ -98,11 +103,11 @@ void Boid::draw(){
 	g_particule_color_data[(index * 4)+3] = 1.0f;
 }
 
-void Boid::cursor(bool explode){
-	float d = stg.mouseVec.sqrDist(pos);
-	stg.mouseVel = v2d(stg.mouseVec);
-	stg.mouseVel -= pos;
-	stg.mouseVel.setLen(10000/d || 1);
-	stg.mouseVel.limit(stg.cursorForce);
-	if(explode) acc += stg.mouseVel; else acc -= stg.mouseVel;
+void Boid::cursor(v2d mouseVec, bool explode){
+	float d = mouseVec.sqrDist(pos);
+	v2d mouseVel = v2d(mouseVec);
+	mouseVel -= pos;
+	mouseVel.setLen(1000/d || 1);
+	mouseVel.limit(stg.cursorForce);
+	if(explode) acc += mouseVel; else acc -= mouseVel;
 }

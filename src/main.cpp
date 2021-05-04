@@ -102,26 +102,43 @@ void renderParticles()
 
 	glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, stg.boidCount);
 }
+extern "C" void EMSCRIPTEN_KEEPALIVE handleMouse(float x, float y, int button, bool pressed)
+{
+	lvl->setMouse(v2d(x, y), button, pressed);
+}
+// // This is your routine C++ code
+// size_t MyStrLen(std::string inStr) {
+//     return inStr.length();
+// }
+std::string testFunction()
+{
+	return "hello world";
+}
+// This is the extra code you need to write to expose your function to JS
+EMSCRIPTEN_BINDINGS(my_module) {
+    emscripten::function("test", &testFunction);
+}
 
 void mainloop(void *arg)
 {
 	context *ctx = static_cast<context *>(arg);
 	GLFWwindow *window = ctx->window;
-
-	setScreenSize();
-	glfwSetWindowSize(window, stg.width, stg.height);
-	glViewport(0, 0, stg.width, stg.height);
-
-	auto loc = glGetUniformLocation(ctx->program, "aspect");
-	glUniform1f(loc, static_cast<float>(stg.height) / static_cast<float>(stg.width));
-
-	loc = glGetUniformLocation(ctx->program, "size");
-	glUniform1f(loc, stg.size);
-	quadSize(stg.size / 16.0f);
-
-	// Calculate forces on all boids
+	// handleEvents(window);
 	if (!stg.paused)
 	{
+		setScreenSize();
+		glfwSetWindowSize(window, stg.width, stg.height);
+		glViewport(0, 0, stg.width, stg.height);
+
+		auto loc = glGetUniformLocation(ctx->program, "aspect");
+		glUniform1f(loc, static_cast<float>(stg.height) / static_cast<float>(stg.width));
+
+		loc = glGetUniformLocation(ctx->program, "size");
+		glUniform1f(loc, stg.size);
+		quadSize(stg.size / 16.0f);
+
+	// Calculate forces on all boids
+
 		if(!stg.particles)
 			lvl->flock();
 		// RGB bg = RGB::hexToRGB(0x171615);

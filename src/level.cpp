@@ -41,8 +41,14 @@ void Level::draw()
 	for (int i = 1; i < (stg.boidCount - 1); i++)
 	{
 		// Update boid position
-		boids[i]->update();
+		boids[i]->update(mousePos, mousePressed);
 		// Draw boid
 		boids[i]->draw();
 	}
+}
+void Level::setMouse(v2d pos, bool button, bool pressed)
+{
+	mousePos = pos;
+	mouseButton = button;
+	mousePressed = pressed;
 }

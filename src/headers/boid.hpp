@@ -21,9 +21,9 @@ public:
 
 public:
 	void flock(std::vector<std::unique_ptr<Boid>>& boids);
-	void update();
+	void update(v2d mousePos, bool mousePressed);
 	void draw();
-	void cursor(bool explode);
+	void cursor(v2d mouseVec, bool explode);
 
 private:
     int index;

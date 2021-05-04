@@ -16,6 +16,22 @@ let fps = 0,
     fpsA = [];
 let nextFrame = false;
 
+// var mouseDown = false;
+// var canvas = document.getElementById("canvas");
+// document.addEventListener('mousemove', (event) => {
+//     Module._handleMouse(event.clientX, event.clientY, mouseDown);
+// });
+
+// document.addEventListener('mousedown', (event) => {
+//     mouseDown = true;
+//     Module._handleMouse(event.clientX, event.clientY, mouseDown);
+// });
+
+// document.addEventListener('mouseup', (event) => {
+//     mouseDown = false;
+//     Module._handleMouse(event.clientX, event.clientY, mouseDown);
+// });
+
 function setup() {
     // setValues = Module.cwrap('setValues', 'number', ['number','number','number','number','number','number','number','number']);
     // cont = select('#container');
@@ -44,6 +60,7 @@ function draw() {
     } catch (error) {
 
     }
+    requestAnimationFrame(draw);
     // mouseForce = opt.maxSpeed *
     // 	opt.maxForce *
     // 	(opt.alignment + opt.cohesion + opt.separation + 1) / 12;

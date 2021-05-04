@@ -20,7 +20,7 @@ Settings stg = {
 	1,  		// align
 	1,  		// seperate
 	1,  		// cohere
-	1,  		// cursorForce
+	-0.5,  		// cursorForce
 	
 	0,  		// bounce
 	0,  		// paused

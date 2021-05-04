@@ -5,7 +5,6 @@ const opt = new Vue({
         menu: true,
         paused: false,
         rboids: 600,
-        rsize: 0.25,
 
         toggle: false,
         squares: false,
@@ -33,6 +32,7 @@ const opt = new Vue({
         hidden: false,
         indices: false,
         quadtree: false,
+        rsize: 0.25,
 
         special: {
             rerender: 0,
@@ -66,7 +66,8 @@ const opt = new Vue({
                 debug: "x",
                 hidden: "y",
                 indices: "z",
-                quadtree: "aa"
+                quadtree: "aa",
+                rsize: "ab",
             },
             fpsA: [],
             fps: 60,
