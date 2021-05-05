@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_set>
 
 #include "globals.hpp"
 
@@ -21,9 +22,14 @@ public:
 
 public:
 	void flock(std::vector<std::unique_ptr<Boid>>& boids);
+    void addNeighbor(Boid *neighbor);
+    void clearNeighbors();
 	void update(v2d mousePos, bool mousePressed);
 	void draw();
 	void cursor(v2d mouseVec, bool explode);
+
+public:
+    // std::unordered_set<Boid*> neighbors;
 
 private:
     int index;
@@ -34,6 +40,5 @@ private:
     v2d csn;
     v2d sep;
     v2d temp;
-    // std::vector<int> neighbors;
     // std::vector<float> dists;
 };

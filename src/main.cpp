@@ -101,23 +101,13 @@ void renderParticles()
 	glVertexAttribDivisor(2, 1); // color : one per quad -> 1
 
 	glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, stg.boidCount);
+	
+	// glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
+	// glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	// glEnableVertexAttribArray(0);  
+	// glDrawArraysInstanced(GL_LINE_STRIP, 0, 4, stg.boidCount);
 }
-extern "C" void EMSCRIPTEN_KEEPALIVE handleMouse(float x, float y, int button, bool pressed)
-{
-	lvl->setMouse(v2d(x, y), button, pressed);
-}
-// // This is your routine C++ code
-// size_t MyStrLen(std::string inStr) {
-//     return inStr.length();
-// }
-std::string testFunction()
-{
-	return "hello world";
-}
-// This is the extra code you need to write to expose your function to JS
-EMSCRIPTEN_BINDINGS(my_module) {
-    emscripten::function("test", &testFunction);
-}
+
 
 void mainloop(void *arg)
 {
@@ -132,7 +122,7 @@ void mainloop(void *arg)
 
 		auto loc = glGetUniformLocation(ctx->program, "aspect");
 		glUniform1f(loc, static_cast<float>(stg.height) / static_cast<float>(stg.width));
-
+		stg.size /= 40;
 		loc = glGetUniformLocation(ctx->program, "size");
 		glUniform1f(loc, stg.size);
 		quadSize(stg.size / 16.0f);
@@ -140,12 +130,16 @@ void mainloop(void *arg)
 	// Calculate forces on all boids
 
 		if(!stg.particles)
-			lvl->flock();
+			lvl->flock(16);
 		// RGB bg = RGB::hexToRGB(0x171615);
 		glClearColor(0.086, 0.086, 0.086, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
-		lvl->draw();
+		if(stg.particles)
+			lvl->draw(16);
+		else
+			lvl->draw();
+		// lvl->threadedDraw();
 		updateParticles();
 		renderParticles();
 	}
@@ -156,7 +150,7 @@ void mainloop(void *arg)
 
 int main()
 {
-	lvl = new Level();
+	lvl = new Level(16);
 	setScreenSize();
 
 	// Initializing OpenGL and GLFW

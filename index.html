@@ -31,7 +31,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#2ecc71">
-
+	<meta http-equiv="origin-trial" content="Ajg8rTS5cBQO2UrTjzq47DK/BbBKYwzgLZD0LDeHpUK9FbcM6SYvo+9/Wqs9Px07RH2uyLNf+Utbee7yu0e5uwoAAABeeyJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjgwIiwiZmVhdHVyZSI6IlVucmVzdHJpY3RlZFNoYXJlZEFycmF5QnVmZmVyIiwiZXhwaXJ5IjoxNjMzNDc4Mzk5fQ==">
+	<meta http-equiv="origin-trial" content="Ar9BryN2VoyevUIQbTYBg/RWENl6dPotXazuHmv5ltgr5XsKX3JYjwI8piMXLCDk5FMBGvlrIvtr7wFJxKGvXgUAAAB3eyJvcmlnaW4iOiJodHRwczovL29mZmxpbmUuY29kZXM6NDQzIiwiZmVhdHVyZSI6IlVucmVzdHJpY3RlZFNoYXJlZEFycmF5QnVmZmVyIiwiZXhwaXJ5IjoxNjMzNDc4Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
     <link rel="stylesheet" href="./style.css">
     <link rel="canonical" href="https://boids.cubedhuang.com/">
     <link rel="author" href="https://cubedhuang.com/">
@@ -58,7 +59,9 @@
         <h3>boids</h3>
 
         <p>
-            left and right click to move the boids, or just watch their flocking patterns! <br> double click to make an explosion <br> middle click or click in the top right to toggle this menu <br> press space to pause, and use . to advance one frame
+            left and right click to move the boids, or just watch their flocking patterns! <br> double click to make an
+            explosion <br> middle click or click in the top right to toggle this menu <br> press space to pause, and use
+            . to advance one frame
         </p>
 
         <div id="pauser">
@@ -70,13 +73,17 @@
         <div class="resetters">
             <button @click="restart">restart simulation</button>
             <button @click="reset">reset settings</button>
+            <div id="inputfile">
+                <span>open file</span>
+                <input type="file" name="inputfile" id="filebutton" title>
+            </div>
         </div>
 
         <p>number of boids: {{ boids }}</p>
         <input type="range" min="25" max="1000000" step="25" v-model="rboids">
 
         <p>boid size: {{ size }}</p>
-        <input type="range" min="0" max="1" step="any" v-model="rsize">
+        <input type="range" min="0" max="100" step="0.5" v-model="rsize">
 
         <h4>visual settings</h4>
 
@@ -182,7 +189,7 @@
     <!-- Allow the C++ to access the canvas element -->
     <script type='text/javascript'>
         var Module = {
-            canvas: (function() {
+            canvas: (function () {
                 return document.getElementById('canvas');
             })()
         };
@@ -195,7 +202,7 @@
     <script>
         const compileShader = WebGL2RenderingContext.prototype.compileShader;
 
-        WebGL2RenderingContext.prototype.compileShader = function(shader) {
+        WebGL2RenderingContext.prototype.compileShader = function (shader) {
             compileShader.call(this, shader);
 
             if (!this.getShaderParameter(shader, this.COMPILE_STATUS)) {
@@ -204,7 +211,7 @@
         };
 
         const linkProgram = WebGL2RenderingContext.prototype.linkProgram;
-        WebGL2RenderingContext.prototype.linkProgram = function(program) {
+        WebGL2RenderingContext.prototype.linkProgram = function (program) {
             linkProgram.call(this, program);
 
             if (!this.getProgramParameter(program, this.LINK_STATUS)) {
@@ -217,7 +224,8 @@
 		<script src="./js/boid.js"></script>
 		<script src="./js/flock.js"></script> -->
     <script src="./js/script.js"></script>
-	<script src="./js/events.js"></script>
+    <script src="./js/events.js"></script>
+    <script src="./js/data.js"></script>
     <script>
         requestAnimationFrame(draw);
     </script>

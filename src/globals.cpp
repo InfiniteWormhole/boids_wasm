@@ -63,3 +63,27 @@ extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float m
 	//stg.boidCount = boidCount;
 	return stg.align;
 };
+
+void handleMouse(float x, float y, int button, bool pressed)
+{
+	lvl->setMouse(v2d(x, y), button, pressed);
+}
+// // This is your routine C++ code
+// size_t MyStrLen(std::string inStr) {
+//     return inStr.length();
+// }
+std::string testFunction()
+{
+	return "hello world";
+}
+
+void importData(char* data, int length){
+	emscripten_log(0, "%c", data[0]);
+}
+// This is the extra code you need to write to expose your function to JS
+EMSCRIPTEN_BINDINGS(my_module) {
+	using namespace emscripten;
+    function("test", &testFunction);
+	function("handleMouse", &handleMouse);
+	function("importData", &importData, allow_raw_pointers());
+}

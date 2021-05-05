@@ -48,18 +48,18 @@ const g = {
             opt.menu = !opt.menu;
             prevent(e);
         }
-		Module._handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
+		Module.handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
     }
 
     function up() {
         g.mouse.down = false;
-		Module._handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
+		Module.handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
     }
 
     function move(e) {
         g.mouse.x = e.clientX ?? e.touches[0].clientX;
         g.mouse.y = e.clientY ?? e.touches[0].clientY;
-		Module._handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
+		Module.handleMouse(g.mouse.x, g.mouse.y, g.mouse.button, g.mouse.down && g.mouse.over);
 
     }
 
