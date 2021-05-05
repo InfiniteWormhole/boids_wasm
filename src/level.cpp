@@ -3,14 +3,37 @@
 
 #include "../lib/include/swarm.hpp"
 
-
-
 Level::Level(int threadCount)
 {
 	// Create a Swarm object with 16 thread
 	// const uint32_t thread_count(threadCount);
 	swarm = new swrm::Swarm(threadCount);
 	// swrm::Swarm swarm(thread_count);
+}
+Boid Level::getBoid(int i)
+{
+	return *(boids[i].get());
+}
+
+nlohmann::json Level::toJson()
+{
+	nlohmann::json js;
+	js.push_back(stg);
+	for (int i = 0; i < stg.boidCount; i++)
+	{
+		js.push_back(getBoid(i));
+	}
+	return js;
+}
+
+Level::Level(nlohmann::json json, int threadCount)
+{
+	// swarm = new swrm::Swarm(threadCount);
+	json.erase(json.begin());
+	for(Boid boid : json)
+	{
+		boids.push_back(std::make_unique<Boid>(std::move(boid)));
+	}
 }
 
 void Level::modifyBoids(int newCount, int oldCount)

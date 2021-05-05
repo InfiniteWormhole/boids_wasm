@@ -366,12 +366,11 @@ button,
 	user-select: none;
 	background-color: #0008;
 	color: var(--base);
-	margin-top: 10px;
-	margin-bottom: 5px;
 	box-shadow: 0 4px 0 var(--base);
 	cursor: pointer;
 	transition: background 0.2s, color 0.2s, filter 0.2s, transform 0.1s,
 		box-shadow 0.1s;
+	/* width: 50%; */
 }
 
 #inputfile input {
@@ -418,12 +417,15 @@ div#inputfile:active {
 }
 
 .resetters {
+	margin-top: 10px;
+	margin-bottom: 5px;
 	display: flex;
 	gap: 12px;
+	flex-wrap:wrap;
 }
 
 .resetters * {
-	flex: 1;
+	flex: 1 1 33%;
 }
 
 /* tooltip */

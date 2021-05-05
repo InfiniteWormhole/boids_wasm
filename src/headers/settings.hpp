@@ -2,6 +2,12 @@
 
 #include <stdint.h>
 #include "v2d.h"
+#include "../../lib/include/json.hpp"
+
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(v2d,
+x,
+y)
 
 struct Settings
 {
@@ -9,7 +15,7 @@ struct Settings
 	uint16_t height = 1080;
 
 	float vis = 75;
-	float sqVis = vis*vis;
+	float sqVis = vis * vis;
 
 	float maxSpeed = 8;
 	float maxForce = 0.2f;
@@ -28,4 +34,26 @@ struct Settings
 	bool particles = 0;
 	v2d mouseVec;
 	v2d mouseVel;
+	
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+		Settings,
+		width,
+		height,
+		vis,
+		sqVis,
+		maxSpeed,
+		maxForce,
+		boidCount,
+		size,
+		drag,
+		align,
+		seperate,
+		cohere,
+		cursorForce,
+		bounce,
+		paused,
+		particles,
+		mouseVec,
+		mouseVel
+	)
 };

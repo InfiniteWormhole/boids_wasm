@@ -14,6 +14,14 @@ public:
         pos = v2d(rand() % stg.width, rand() % stg.height);
         vel.randomize(stg.maxSpeed);
     }
+
+	Boid()
+	{
+		index = 0;
+        pos = v2d(rand() % stg.width, rand() % stg.height);
+        vel.randomize(stg.maxSpeed);
+	}
+
 // Override the == operator to compare indices
     bool operator == (const Boid& compare)
     {
@@ -30,6 +38,17 @@ public:
 
 public:
     // std::unordered_set<Boid*> neighbors;
+	public:
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Boid,
+		index,
+		pos,
+		vel,
+		acc,
+		aln,
+		csn,
+		sep,
+		temp
+	)
 
 private:
     int index;
