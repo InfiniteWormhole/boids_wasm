@@ -2,13 +2,26 @@
 #include "headers/rgb.hpp"
 #include "headers/level.hpp"
 
-void Boid::addNeighbor(Boid *neighbor)
+Boid::Boid(int index) : index(index)
 {
-	// neighbors.insert(neighbor);
+	pos = v2d(rand() % stg.width, rand() % stg.height);
+	vel.randomize(stg.maxSpeed);
 }
-void Boid::clearNeighbors()
+Boid::Boid(jsonBoid &boid) : index(boid.index), pos(boid.pos), vel(boid.vel)
 {
-	// neighbors.clear();
+}
+
+Boid::Boid()
+{
+	index = 0;
+	pos = v2d(rand() % stg.width, rand() % stg.height);
+	vel.randomize(stg.maxSpeed);
+}
+
+// Override the == operator to compare indices
+bool Boid::operator==(const Boid &compare)
+{
+	return (this->index == compare.index);
 }
 
 // Calculate forces based on neighbors
@@ -26,7 +39,6 @@ void Boid::flock(std::vector<std::unique_ptr<Boid>> &boids)
 	// Loop over all boids and calculate distances
 	for (int i = 0; i < (int)stg.boidCount; i++)
 	{
-		// Boid* target = boids[i].get();
 		// Skip ourself
 		if (boids[i].get() == this)
 			continue;
@@ -44,18 +56,18 @@ void Boid::flock(std::vector<std::unique_ptr<Boid>> &boids)
 		// else
 		// if (neighbors.find(boids[i].get()) == neighbors.end())
 		// {
-			d = pos.sqrDist(boids[i]->pos);
-			// Push found neighbors
-			if (d <= stg.sqVis)
-			{
-				// neighbors.push_back(index);
-				//dists.PushBack(d);
-				// boids[i]->neighbors.insert(this);
-				aln += boids[i]->vel;
-				csn += boids[i]->pos;
-				sep += (pos - boids[i]->pos) / d;
-				total++;
-			}
+		d = pos.sqrDist(boids[i]->pos);
+		// Push found neighbors
+		if (d <= stg.sqVis)
+		{
+			// neighbors.push_back(index);
+			//dists.PushBack(d);
+			// boids[i]->neighbors.insert(this);
+			aln += boids[i]->vel;
+			csn += boids[i]->pos;
+			sep += (pos - boids[i]->pos) / d;
+			total++;
+		}
 		// }
 		// else
 		// {
@@ -75,7 +87,6 @@ void Boid::flock(std::vector<std::unique_ptr<Boid>> &boids)
 		aln -= vel;
 		aln.limit(stg.maxForce);
 		// Limit cohesion force
-		//csn = (csn / total) - pos;
 		csn /= (float)total;
 		csn -= pos;
 		csn.setLen(stg.maxSpeed);
@@ -104,27 +115,25 @@ void Boid::update(v2d mousePos, bool mousePressed)
 	vel = vel * (1 - stg.drag);
 	pos += vel;
 	if (pos.x < 0)
-		pos.x = stg.width;
+		pos.x += stg.width;
 	if (pos.x > stg.width)
-		pos.x = 0;
+		pos.x -= stg.width;
 	if (pos.y < 0)
-		pos.y = stg.height;
+		pos.y += stg.height;
 	if (pos.y > stg.height)
-		pos.y = 0;
+		pos.y -= stg.height;
 
-	if (stg.mouseVec.x < 0)
-		stg.mouseVec.x = stg.width;
-	if (stg.mouseVec.x > stg.width)
-		stg.mouseVec.x = 0;
-	if (stg.mouseVec.y < 0)
-		stg.mouseVec.y = stg.height;
-	if (stg.mouseVec.y > stg.height)
-		stg.mouseVec.y = 0;
-	// assert(pos.x != NULL);
-	if(pos.x == NULL && pos.y == NULL && vel.x == NULL && vel.y == NULL)
-		emscripten_log(0, "%i", index);
+	// if (stg.mouseVec.x < 0)
+	// 	stg.mouseVec.x += stg.width;
+	// if (stg.mouseVec.x > stg.width)
+	// 	stg.mouseVec.x -= 0;
+	// if (stg.mouseVec.y < 0)
+	// 	stg.mouseVec.y += stg.height;
+	// if (stg.mouseVec.y > stg.height)
+	// 	stg.mouseVec.y -= 0;
 }
 
+// Draw me to buffer
 void Boid::draw()
 {
 	v2d lineEnd((pos + vel * 5));
@@ -141,6 +150,7 @@ void Boid::draw()
 	g_particule_color_data[(index * 4) + 3] = 1.0f;
 }
 
+// Apply cursor force
 void Boid::cursor(v2d mouseVec, bool explode)
 {
 	float d = mouseVec.sqrDist(pos);

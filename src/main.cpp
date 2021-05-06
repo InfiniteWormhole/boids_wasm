@@ -1,5 +1,5 @@
-// TI-84 CE Boid Simulation
-//
+// WASM WebGL Boid/Particle Simulation
+
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
@@ -7,10 +7,6 @@
 #include <iostream>
 #include <unistd.h>
 #include <vector>
-
-// #include <SDL.h>
-
-// #include <GL/glext.h>
 
 #include "headers/globals.hpp"
 #include "headers/rgb.hpp"
@@ -25,27 +21,24 @@ struct context
 	int iteration;
 };
 
-// float size = 0.1;
-GLfloat g_vertex_buffer_data[12];// = {
-// -(size * ((float)stg.height/(float)stg.width)), -(size), 0.0f,
-//  (size * ((float)stg.height/(float)stg.width)), -(size), 0.0f,
-// -(size * ((float)stg.height/(float)stg.width)),  (size), 0.0f,
-//  (size * ((float)stg.height/(float)stg.width)),  (size), 0.0f,
-// };
+GLfloat g_vertex_buffer_data[12];
 
-void quadSize(float size){
-	g_vertex_buffer_data[0] = -(size * ((float)stg.height/(float)stg.width));
+// Resize particle quad
+void quadSize(float size)
+{
+	g_vertex_buffer_data[0] = -(size * ((float)stg.height / (float)stg.width));
 	g_vertex_buffer_data[1] = -size;
-	g_vertex_buffer_data[3] = (size * ((float)stg.height/(float)stg.width));
+	g_vertex_buffer_data[3] = (size * ((float)stg.height / (float)stg.width));
 	g_vertex_buffer_data[4] = -size;
-	g_vertex_buffer_data[6] = -(size * ((float)stg.height/(float)stg.width));
+	g_vertex_buffer_data[6] = -(size * ((float)stg.height / (float)stg.width));
 	g_vertex_buffer_data[7] = size;
-	g_vertex_buffer_data[9] = (size * ((float)stg.height/(float)stg.width));
+	g_vertex_buffer_data[9] = (size * ((float)stg.height / (float)stg.width));
 	g_vertex_buffer_data[10] = size;
 }
 
+// Update GPU buffers
 void updateParticles()
-{	
+{
 	glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
@@ -101,13 +94,12 @@ void renderParticles()
 	glVertexAttribDivisor(2, 1); // color : one per quad -> 1
 
 	glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, stg.boidCount);
-	
+
 	// glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
 	// glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	// glEnableVertexAttribArray(0);  
+	// glEnableVertexAttribArray(0);
 	// glDrawArraysInstanced(GL_LINE_STRIP, 0, 4, stg.boidCount);
 }
-
 
 void mainloop(void *arg)
 {
@@ -122,24 +114,21 @@ void mainloop(void *arg)
 
 		auto loc = glGetUniformLocation(ctx->program, "aspect");
 		glUniform1f(loc, static_cast<float>(stg.height) / static_cast<float>(stg.width));
-		// stg.size /= 40;
 		loc = glGetUniformLocation(ctx->program, "size");
-		glUniform1f(loc, stg.size/40);
-		quadSize((stg.size/40)/ 16.0f);
+		glUniform1f(loc, stg.size / 40);
+		quadSize((stg.size / 40) / 16.0f);
 
-	// Calculate forces on all boids
+		// Calculate forces on all boids
 
-		if(!stg.particles)
+		if (!stg.particles)
 			lvl->flock(16);
-		// RGB bg = RGB::hexToRGB(0x171615);
 		glClearColor(0.086, 0.086, 0.086, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		// glDrawArrays(GL_TRIANGLES, 0, 3);
-		if(stg.particles)
+
+		if (stg.particles)
 			lvl->draw(16);
 		else
 			lvl->draw();
-		// lvl->threadedDraw();
 		updateParticles();
 		renderParticles();
 	}
@@ -161,36 +150,15 @@ int main()
 	std::cout << triFrag << '\n';
 	glUseProgram(triShader);
 	glBindVertexArray(VAO);
-	// for (int i = 0; i < 4 * maxCount; i+=4)
-	// {
-	// 	g_particule_position_size_data[i] = emscripten_random() * 2 - 1;
-	// 	g_particule_position_size_data[i+1] = -2 * emscripten_random() + 1;
-	// 	g_particule_color_data[i] = emscripten_random() * 255;
-	// 	g_particule_color_data[i+1] = emscripten_random() * 255;
-	// 	g_particule_color_data[i+2] = emscripten_random() * 255;
-	// }
+
 	glEnable(GL_BLEND);
-	// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-	// glEnable(GL_ALPHA_TEST);
-	// glAlphaFunc(GL_LESS, 0.5F);
-	// glBlendFunc(GL_ONE, GL_ZERO);
-	// SDL_Init(SDL_INIT_VIDEO);
-	// SDL_Window *window;
-	// SDL_Renderer *renderer;
-	// SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	// SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
-	// SDL_CreateWindowAndRenderer(stg.width, stg.height, 0, &window, &renderer);
 
 	context ctx = {
 		window,
 		triShader,
-		0
-	};
-
-	// Initialize particle sprite
-	stg.mouseVec = v2d(stg.width / 2, stg.height / 2);
+		0};
 
 	// Seed RNG with current time
 	srand((unsigned int)emscripten_get_now());
@@ -198,15 +166,19 @@ int main()
 	// Populate vector with new boids
 	lvl->populate();
 
-	// Simulate until a key is pressed
+	// Simulate forever
 	const int simulate_infinite_loop = 1; // call the function repeatedly
 	const int fps = -1;					  // call the function as fast as the browser wants to render (typically 60fps)
 	emscripten_set_main_loop_arg(mainloop, &ctx, fps, simulate_infinite_loop);
 
-	// SDL_DestroyRenderer(renderer);
-	// SDL_DestroyWindow(window);
-	// SDL_Quit();
 	glfwTerminate();
 
 	return EXIT_SUCCESS;
+}
+
+extern "C" void EMSCRIPTEN_KEEPALIVE restart()
+{
+	emscripten_cancel_main_loop();
+	delete lvl;
+	main();
 }

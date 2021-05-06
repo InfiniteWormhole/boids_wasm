@@ -58,7 +58,6 @@ extern "C" int EMSCRIPTEN_KEEPALIVE setValues(float vis, float maxSpeed, float m
 	stg.drag = drag;
 	stg.paused = paused;
 	stg.particles = particles;
-	//stg.boidCount = boidCount;
 	return stg.align;
 };
 
@@ -66,42 +65,25 @@ void handleMouse(float x, float y, int button, bool pressed)
 {
 	lvl->setMouse(v2d(x, y), button, pressed);
 }
-// // This is your routine C++ code
-// size_t MyStrLen(std::string inStr) {
-//     return inStr.length();
-// }
+
 std::string testFunction()
 {
 	return "hello world";
 }
 
-// void importData(uintptr_t input, size_t len)
-// {
-// 	const Settings *newStg = reinterpret_cast<Settings *>(input);
-// 	stg = *newStg;
-// 	// std::string string = std::string(ptr);
-// 	// std::cout << settings << std::endl;
-// 	emscripten_log(0, "%i", stg.boidCount);
-// }
-
 void importData(std::string jsonString)
 {
 	nlohmann::json js = nlohmann::json::parse(jsonString);
-	// std::cout << js << std::endl;
-	// std::cout << js.get<Settings>().boidCount << std::endl;
-	// stg = js.get<Settings>();
-	// delete lvl;
 	*lvl = Level(js, 16);
 }
 
 std::string exportData()
 {
-	// std::vector<char> settings = std::vector<char>(reinterpret_cast<char *>(&stg), reinterpret_cast<char *>(&stg) + sizeof(stg));
 	nlohmann::json js = lvl->toJson();
-	// std::cout << js << std::endl;
 	std::string jsString = js.dump();
 	return jsString;
 }
+
 // This is the extra code you need to write to expose your function to JS
 EMSCRIPTEN_BINDINGS(my_module)
 {
@@ -110,5 +92,4 @@ EMSCRIPTEN_BINDINGS(my_module)
 	function("handleMouse", &handleMouse);
 	function("importData", &importData);
 	function("exportData", &exportData);
-	// register_vector<char>("vector<char>");
 }

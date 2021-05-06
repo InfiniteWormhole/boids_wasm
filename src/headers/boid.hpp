@@ -10,32 +10,15 @@ class Boid {
 
 public:
 // Construct new boid with random location and position with index of _index
-    Boid(int _index) {
-        index = _index;
-        pos = v2d(rand() % stg.width, rand() % stg.height);
-        vel.randomize(stg.maxSpeed);
-    }
-	Boid(jsonBoid& boid) : index(boid.index), pos(boid.pos), vel(boid.vel)
-	{
-	}
-
-	Boid()
-	{
-		index = 0;
-        pos = v2d(rand() % stg.width, rand() % stg.height);
-        vel.randomize(stg.maxSpeed);
-	}
+    Boid(int index);
+	Boid(jsonBoid& boid);
+	Boid();
 
 // Override the == operator to compare indices
-    bool operator == (const Boid& compare)
-    {
-        return(this->index == compare.index);
-    }
+    bool operator == (const Boid& compare);
 
 public:
 	void flock(std::vector<std::unique_ptr<Boid>>& boids);
-    void addNeighbor(Boid *neighbor);
-    void clearNeighbors();
 	void update(v2d mousePos, bool mousePressed);
 	void draw();
 	void cursor(v2d mouseVec, bool explode);

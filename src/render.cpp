@@ -34,13 +34,6 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 	GLchar *gridVertexSource = (char *)vertShader.c_str();
 	GLchar *gridFragmentSource = (char *)fragShader.c_str();
 
-	// Create a Vertex Buffer Object and copy the vertex data to it
-	// GLuint vbo;
-	// glGenBuffers(1, &vbo);
-
-	// glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	// glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
 	// Create and compile the vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &gridVertexSource, nullptr);
@@ -50,14 +43,17 @@ GLuint compileShaders(std::string vertShader, std::string fragShader)
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &gridFragmentSource, nullptr);
 	glCompileShader(fragmentShader);
+
 	// Link the vertex and fragment shader into a shader program
 	GLuint shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
-	// glUseProgram(shaderProgram);
-	// glDeleteShader(vertexShader);
-	// glDeleteShader(fragmentShader);
+
+	// Clean up unlinked shaders
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	
 	return shaderProgram;
 }
 

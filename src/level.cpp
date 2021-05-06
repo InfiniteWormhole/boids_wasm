@@ -5,10 +5,8 @@
 
 Level::Level(int threadCount)
 {
-	// Create a Swarm object with 16 thread
-	// const uint32_t thread_count(threadCount);
+	// Create a Swarm object
 	swarm = new swrm::Swarm(threadCount);
-	// swrm::Swarm swarm(thread_count);
 }
 Boid Level::getBoid(int i)
 {
@@ -24,13 +22,11 @@ nlohmann::json Level::toJson()
 		Boid boid = getBoid(i);
 		js.push_back(jsonBoid(boid));
 	}
-	// json.erase(json.end() - 1);
 	return js;
 }
 
 Level::Level(nlohmann::json json, int threadCount)
 {
-	// swarm = new swrm::Swarm(threadCount);
 	json.erase(json.begin());
 	for(jsonBoid jsBoid : json)
 	{
@@ -51,10 +47,6 @@ void Level::modifyBoids(int newCount, int oldCount)
 	}
 	else if (newCount < oldCount)
 	{
-		// for (int i = newCount; i < oldCount; i++)
-		// {
-		// 	boids.pop_back();
-		// }
 		boids.erase(boids.begin() + newCount, boids.end());
 	}
 }
@@ -69,10 +61,6 @@ void Level::populate()
 
 void Level::flock()
 {
-	// for (int i = 0; i < boids.size(); i++)
-	// {
-	// 	boids[i]->clearNeighbors();
-	// }
 	for (int i = 0; i < boids.size(); i++)
 	{
 		boids[i]->flock(boids);
@@ -92,13 +80,11 @@ void Level::draw()
 
 void Level::draw(int threadCount)
 {
-	// Create a Swarm object with 16 thread
-	// const uint32_t thread_count(threadCount);
-	// swrm::Swarm swarm(thread_count);
 	// Start parallel job
 	swrm::WorkGroup group = swarm->execute([&](uint32_t worker_id, uint32_t worker_count) {
 		lvl->threadedDraw(worker_id, worker_count);
 	});
+	
 	// Wait for the job to terminate
 	group.waitExecutionDone();
 	for (int i = 0; i < boids.size(); i++)
