@@ -4,6 +4,7 @@
 #include <unordered_set>
 
 #include "globals.hpp"
+#include "jsonboid.hpp"
 
 class Boid {
 
@@ -14,6 +15,9 @@ public:
         pos = v2d(rand() % stg.width, rand() % stg.height);
         vel.randomize(stg.maxSpeed);
     }
+	Boid(jsonBoid& boid) : index(boid.index), pos(boid.pos), vel(boid.vel)
+	{
+	}
 
 	Boid()
 	{
@@ -38,22 +42,22 @@ public:
 
 public:
     // std::unordered_set<Boid*> neighbors;
-	public:
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Boid,
-		index,
-		pos,
-		vel,
-		acc,
-		aln,
-		csn,
-		sep,
-		temp
-	)
+	// NLOHMANN_DEFINE_TYPE_INTRUSIVE(Boid,
+	// 	index,
+	// 	pos,
+	// 	vel,
+	// 	acc,
+	// 	aln,
+	// 	csn,
+	// 	sep,
+	// 	temp
+	// )
 
-private:
+public:
     int index;
     v2d pos;
     v2d vel;
+private:
     v2d acc;
     v2d aln;
     v2d csn;

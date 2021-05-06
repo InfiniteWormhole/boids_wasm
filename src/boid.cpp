@@ -120,6 +120,9 @@ void Boid::update(v2d mousePos, bool mousePressed)
 		stg.mouseVec.y = stg.height;
 	if (stg.mouseVec.y > stg.height)
 		stg.mouseVec.y = 0;
+	// assert(pos.x != NULL);
+	if(pos.x == NULL && pos.y == NULL && vel.x == NULL && vel.y == NULL)
+		emscripten_log(0, "%i", index);
 }
 
 void Boid::draw()

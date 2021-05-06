@@ -19,10 +19,12 @@ nlohmann::json Level::toJson()
 {
 	nlohmann::json js;
 	js.push_back(stg);
-	for (int i = 0; i < stg.boidCount; i++)
+	for (int i = 0; i < stg.boidCount - 1; i++)
 	{
-		js.push_back(getBoid(i));
+		Boid boid = getBoid(i);
+		js.push_back(jsonBoid(boid));
 	}
+	// json.erase(json.end() - 1);
 	return js;
 }
 
@@ -30,9 +32,11 @@ Level::Level(nlohmann::json json, int threadCount)
 {
 	// swarm = new swrm::Swarm(threadCount);
 	json.erase(json.begin());
-	for(Boid boid : json)
+	for(jsonBoid jsBoid : json)
 	{
-		boids.push_back(std::make_unique<Boid>(std::move(boid)));
+		std::cout << (nlohmann::json)jsBoid << '\n';
+		Boid boid = jsBoid;
+		boids.push_back(std::make_unique<Boid>(boid));
 	}
 }
 

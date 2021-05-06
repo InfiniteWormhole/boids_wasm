@@ -122,10 +122,10 @@ void mainloop(void *arg)
 
 		auto loc = glGetUniformLocation(ctx->program, "aspect");
 		glUniform1f(loc, static_cast<float>(stg.height) / static_cast<float>(stg.width));
-		stg.size /= 40;
+		// stg.size /= 40;
 		loc = glGetUniformLocation(ctx->program, "size");
-		glUniform1f(loc, stg.size);
-		quadSize(stg.size / 16.0f);
+		glUniform1f(loc, stg.size/40);
+		quadSize((stg.size/40)/ 16.0f);
 
 	// Calculate forces on all boids
 
