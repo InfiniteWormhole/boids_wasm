@@ -1,0 +1,49 @@
+[
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -emit-pch -Xclang -include -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx -o CMakeFiles/index.dir/cmake_pch.hxx.pch -c /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.cxx",
+  "file": "/workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.cxx"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/boid.cpp.o -c /workspaces/boids_wasm/src/boid.cpp",
+  "file": "/workspaces/boids_wasm/src/boid.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/globals.cpp.o -c /workspaces/boids_wasm/src/globals.cpp",
+  "file": "/workspaces/boids_wasm/src/globals.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/jsonboid.cpp.o -c /workspaces/boids_wasm/src/jsonboid.cpp",
+  "file": "/workspaces/boids_wasm/src/jsonboid.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/level.cpp.o -c /workspaces/boids_wasm/src/level.cpp",
+  "file": "/workspaces/boids_wasm/src/level.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/main.cpp.o -c /workspaces/boids_wasm/src/main.cpp",
+  "file": "/workspaces/boids_wasm/src/main.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/render.cpp.o -c /workspaces/boids_wasm/src/render.cpp",
+  "file": "/workspaces/boids_wasm/src/render.cpp"
+},
+
+{
+  "directory": "/workspaces/boids_wasm/build",
+  "command": "/workspaces/emsdk/upstream/emscripten/em++    -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch -o CMakeFiles/index.dir/src/rgb.cpp.o -c /workspaces/boids_wasm/src/rgb.cpp",
+  "file": "/workspaces/boids_wasm/src/rgb.cpp"
+}
+]

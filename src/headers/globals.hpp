@@ -6,8 +6,8 @@
 #define GLFW_INCLUDE_ES3
 #include <GLFW/glfw3.h>
 #include <GLES3/gl3.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
+// #include <glm.hpp>
+// #include <gtc/matrix_transform.hpp>
 
 #include "settings.hpp"
 
