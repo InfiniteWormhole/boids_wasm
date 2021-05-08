@@ -32,7 +32,7 @@ Level::Level(nlohmann::json json, int threadCount)
 	{
 		std::cout << (nlohmann::json)jsBoid << '\n';
 		Boid boid = jsBoid;
-		boids.push_back(std::make_unique<Boid>(boid));
+		boids.push_back(std::make_shared<Boid>(boid));
 	}
 }
 
@@ -42,7 +42,7 @@ void Level::modifyBoids(int newCount, int oldCount)
 	{
 		for (int i = 1; i < newCount - oldCount; i++)
 		{
-			boids.push_back(std::make_unique<Boid>(oldCount + i));
+			boids.push_back(std::make_shared<Boid>(oldCount + i));
 		}
 	}
 	else if (newCount < oldCount)
@@ -55,7 +55,7 @@ void Level::populate()
 {
 	for (int i = 0; i < stg.boidCount; i++)
 	{
-		boids.push_back(std::make_unique<Boid>(i));
+		boids.push_back(std::make_shared<Boid>(i));
 	}
 }
 

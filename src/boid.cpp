@@ -25,7 +25,7 @@ bool Boid::operator==(const Boid &compare)
 }
 
 // Calculate forces based on neighbors
-void Boid::flock(std::vector<std::unique_ptr<Boid>> &boids)
+void Boid::flock(std::vector<std::shared_ptr<Boid>> &boids)
 {
 	// Zero all force vectors and neighbors
 	int total = 0;

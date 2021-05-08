@@ -18,7 +18,7 @@ public:
     bool operator == (const Boid& compare);
 
 public:
-	void flock(std::vector<std::unique_ptr<Boid>>& boids);
+	void flock(std::vector<std::shared_ptr<Boid>>& boids);
 	void update(v2d mousePos, bool mousePressed);
 	void draw();
 	void cursor(v2d mouseVec, bool explode);

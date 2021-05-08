@@ -57,5 +57,6 @@ set_target_properties(index PROPERTIES LINK_FLAGS "
 						-s TOTAL_MEMORY=256MB 
 						-s USE_PTHREADS=1
 						-s PTHREAD_POOL_SIZE=16
+						-s ENVIRONMENT=web,worker
 						--bind
 						--preload-file ../src/shaders")

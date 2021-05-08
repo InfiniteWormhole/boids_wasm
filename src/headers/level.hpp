@@ -43,12 +43,12 @@ public:
 	// }
 	// static Level from_json(const nlohmann::json &j)
 	// {
-	// 	// return std::unique_ptr<Boid> (new Boid(j.get<Boid>()));
+	// 	// return std::shared_ptr<Boid> (new Boid(j.get<Boid>()));
 	// 	return Level(16);
 	// }
 
 private:
-	std::vector<std::unique_ptr<Boid>> boids;
+	std::vector<std::shared_ptr<Boid>> boids;
 	swrm::Swarm *swarm;
 	v2d mousePos;
 	bool mousePressed;
@@ -63,7 +63,7 @@ private:
 // 		// one argument
 
 // 		// Here's the catch! You must provide a to_json method! Otherwise you
-// 		// will not be able to convert std::unique_ptr<Boid> to json, since you fully
+// 		// will not be able to convert std::shared_ptr<Boid> to json, since you fully
 // 		// specialized adl_serializer on that type
 // 	};
 // }

@@ -132,6 +132,7 @@ build index.js: CXX_EXECUTABLE_LINKER__index CMakeFiles/index.dir/src/boid.cpp.o
 						-s TOTAL_MEMORY=256MB $
 						-s USE_PTHREADS=1$
 						-s PTHREAD_POOL_SIZE=16$
+						-s ENVIRONMENT=web,worker$
 						--bind$
 						--preload-file ../src/shaders
   OBJECT_DIR = CMakeFiles/index.dir
