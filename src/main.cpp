@@ -139,7 +139,7 @@ void mainloop(void *arg)
 
 int main()
 {
-	lvl = new Level(16);
+	lvl = new Level(16, 40);
 	setScreenSize();
 
 	// Initializing OpenGL and GLFW

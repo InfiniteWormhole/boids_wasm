@@ -6,9 +6,16 @@ Boid::Boid(int index) : index(index)
 {
 	pos = v2d(rand() % stg.width, rand() % stg.height);
 	vel.randomize(stg.maxSpeed);
+
+	int const CellX = (pos.x / static_cast<float>(stg.width)) * lvl->divisionSizeX;
+	int const CellY = (pos.y / static_cast<float>(stg.height)) * lvl->divisionSizeY;
+	cell = {CellX, CellY};
 }
 Boid::Boid(jsonBoid &boid) : index(boid.index), pos(boid.pos), vel(boid.vel)
 {
+	int const CellX = (pos.x / static_cast<float>(stg.width)) * lvl->divisionSizeX;
+	int const CellY = (pos.y / static_cast<float>(stg.height)) * lvl->divisionSizeY;
+	cell = {CellX, CellY};
 }
 
 Boid::Boid()
@@ -16,6 +23,10 @@ Boid::Boid()
 	index = 0;
 	pos = v2d(rand() % stg.width, rand() % stg.height);
 	vel.randomize(stg.maxSpeed);
+
+	int const CellX = (pos.x / static_cast<float>(stg.width)) * lvl->divisionSizeX;
+	int const CellY = (pos.y / static_cast<float>(stg.height)) * lvl->divisionSizeY;
+	cell = {CellX, CellY};
 }
 
 // Override the == operator to compare indices
@@ -25,7 +36,7 @@ bool Boid::operator==(const Boid &compare)
 }
 
 // Calculate forces based on neighbors
-void Boid::flock(std::vector<std::shared_ptr<Boid>> &boids)
+void Boid::flock(std::vector<Range> &boidsVec)
 {
 	// Zero all force vectors and neighbors
 	int total = 0;
@@ -37,51 +48,55 @@ void Boid::flock(std::vector<std::shared_ptr<Boid>> &boids)
 	// dists.clear();
 
 	// Loop over all boids and calculate distances
-	for (int i = 0; i < (int)stg.boidCount; i++)
+	// for (int i = 0; i < (int)stg.boidCount; i++)
+	for (auto &boids : boidsVec)
 	{
-		// Skip ourself
-		if (boids[i].get() == this)
-			continue;
-		// Distance to boid
-		float d;
-		// // Skip recalculation of distance if possible
-		// if (index > boids[i]->index) {
-		//     int j = boids[i]->neighbors.at();
-		//     if ((j + 1) > 0) {
-		//         d = boids[i]->dists[j];
-		//     }
-		//     else continue;
-		// }
-		// // Calculate the distance to the boid
-		// else
-		// if (neighbors.find(boids[i].get()) == neighbors.end())
-		// {
-		d = pos.sqrDist(boids[i]->pos);
-		// Push found neighbors
-		if (d <= stg.sqVis)
+		for (auto it = boids.first; it != boids.second; it++)
 		{
-			// neighbors.push_back(index);
-			//dists.PushBack(d);
-			// boids[i]->neighbors.insert(this);
-			aln += boids[i]->vel;
-			csn += boids[i]->pos;
-			sep += (pos - boids[i]->pos) / d;
-			total++;
+			// Skip ourself
+			if (it->second->index == this->index)
+				continue;
+			// Distance to boid
+			float d;
+			// // Skip recalculation of distance if possible
+			// if (index > boids[i]->index) {
+			//     int j = boids[i]->neighbors.at();
+			//     if ((j + 1) > 0) {
+			//         d = boids[i]->dists[j];
+			//     }
+			//     else continue;
+			// }
+			// // Calculate the distance to the boid
+			// else
+			// if (neighbors.find(boids[i].get()) == neighbors.end())
+			// {
+			d = pos.sqrDist(it->second->pos);
+			// Push found neighbors
+			if (d <= stg.sqVis)
+			{
+				// neighbors.push_back(index);
+				//dists.PushBack(d);
+				// boids[i]->neighbors.insert(this);
+				aln += it->second->vel;
+				csn += it->second->pos;
+				sep += (pos - it->second->pos) / d;
+				total++;
+			}
+			// }
+			// else
+			// {
+			// 	// boids[i]->neighbors.erase(this);
+			// 	// neighbors.erase(boids[i].get());
+			// 	aln += boids[i]->vel;
+			// 	csn += boids[i]->pos;
+			// 	sep += (pos - boids[i]->pos) / d;
+			// 	total++;
+			// }
 		}
-		// }
-		// else
-		// {
-		// 	// boids[i]->neighbors.erase(this);
-		// 	// neighbors.erase(boids[i].get());
-		// 	aln += boids[i]->vel;
-		// 	csn += boids[i]->pos;
-		// 	sep += (pos - boids[i]->pos) / d;
-		// 	total++;
-		// }
 	}
-
 	if (total > 0)
 	{
+		emscripten_log(0, "%i", total);
 		// Limit alignment force
 		aln.setLen(stg.maxSpeed);
 		aln -= vel;
