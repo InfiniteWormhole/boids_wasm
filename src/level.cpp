@@ -8,7 +8,7 @@ Level::Level(int threadCount)
 	// Create a Swarm object
 	swarm = new swrm::Swarm(threadCount);
 }
-Boid Level::getBoid(int i)
+const Boid& Level::getBoid(int i)
 {
 	return *(boids[i].get());
 }
@@ -19,8 +19,7 @@ nlohmann::json Level::toJson()
 	js.push_back(stg);
 	for (int i = 0; i < stg.boidCount - 1; i++)
 	{
-		Boid boid = getBoid(i);
-		js.push_back(jsonBoid(boid));
+		js.push_back(jsonBoid(getBoid(i)));
 	}
 	return js;
 }
@@ -28,11 +27,10 @@ nlohmann::json Level::toJson()
 Level::Level(nlohmann::json json, int threadCount)
 {
 	json.erase(json.begin());
-	for(jsonBoid jsBoid : json)
+	for(jsonBoid&& jsBoid : json)
 	{
-		std::cout << (nlohmann::json)jsBoid << '\n';
-		Boid boid = jsBoid;
-		boids.push_back(std::make_shared<Boid>(boid));
+		// std::cout << (nlohmann::json)jsBoid << '\n';
+		boids.push_back(std::make_shared<Boid>(static_cast<Boid>(jsBoid)));
 	}
 }
 
@@ -61,22 +59,32 @@ void Level::populate()
 
 void Level::flock()
 {
-	for (int i = 0; i < boids.size(); i++)
+	// for (int i = 0; i < boids.size(); i++)
+	// {
+	// 	boids[i]->flock(boids);
+	// }
+	for (auto&& boid : boids)
 	{
-		boids[i]->flock(boids);
+		boid->flock(boids);
 	}
 }
 
 void Level::draw()
 {
-	for (int i = 1; i < (stg.boidCount - 1); i++)
+	// for (int i = 1; i < (stg.boidCount - 1); i++)
+	// {
+	// 	boids[i]->update(mousePos, mousePressed);
+	// 	boids[i]->draw();
+	// }
+	for (auto&& boid : boids)
 	{
 		// Update boid position
-		boids[i]->update(mousePos, mousePressed);
+		boid->update(mousePos, mousePressed);
 		// Draw boid
-		boids[i]->draw();
+		boid->draw();
 	}
 }
+
 
 void Level::draw(int threadCount)
 {
@@ -87,10 +95,6 @@ void Level::draw(int threadCount)
 	
 	// Wait for the job to terminate
 	group.waitExecutionDone();
-	for (int i = 0; i < boids.size(); i++)
-	{
-		boids[i]->draw();
-	}
 }
 
 void Level::flock(int threadCount)
@@ -120,6 +124,7 @@ void Level::threadedDraw(uint32_t worker_id, uint32_t worker_count)
 	for (uint32_t i(start_index); i < end_index; ++i)
 	{
 		boids[i]->update(mousePos, mousePressed);
+		boids[i]->draw();
 	}
 }
 

@@ -3,3 +3,5 @@
 # *.cpp
 .vscode
 SDL2
+.cache
+compile_commands.json

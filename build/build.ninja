@@ -64,48 +64,56 @@ build cmake_object_order_depends_target_index: phony || CMakeFiles/index.dir
 build CMakeFiles/index.dir/cmake_pch.hxx.pch: CXX_COMPILER__index CMakeFiles/index.dir/cmake_pch.hxx.cxx | CMakeFiles/index.dir/cmake_pch.hxx || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/cmake_pch.hxx.pch.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -emit-pch -Xclang -include -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir
 
 build CMakeFiles/index.dir/src/boid.cpp.o: CXX_COMPILER__index ../src/boid.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/boid.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/globals.cpp.o: CXX_COMPILER__index ../src/globals.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/globals.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/jsonboid.cpp.o: CXX_COMPILER__index ../src/jsonboid.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/jsonboid.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/level.cpp.o: CXX_COMPILER__index ../src/level.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/level.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/main.cpp.o: CXX_COMPILER__index ../src/main.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/main.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/render.cpp.o: CXX_COMPILER__index ../src/render.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/render.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
 build CMakeFiles/index.dir/src/rgb.cpp.o: CXX_COMPILER__index ../src/rgb.cpp | CMakeFiles/index.dir/cmake_pch.hxx CMakeFiles/index.dir/cmake_pch.hxx.pch || cmake_object_order_depends_target_index
   DEP_FILE = CMakeFiles/index.dir/src/rgb.cpp.o.d
   FLAGS = -O3 -DNDEBUG   -std=c++17 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=16 -O3 -fexceptions -Xclang -include-pch -Xclang /workspaces/boids_wasm/build/CMakeFiles/index.dir/cmake_pch.hxx.pch
+  INCLUDES = -I/home/codespace/emsdk/upstream/emscripten/system/include
   OBJECT_DIR = CMakeFiles/index.dir
   OBJECT_FILE_DIR = CMakeFiles/index.dir/src
 
@@ -168,14 +176,14 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt /usr/share/cmake-3.16/Modules/CMakeCInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake-3.16/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.16/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.16/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.16/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.16/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.16/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang.cmake /usr/share/cmake-3.16/Modules/Compiler/GNU.cmake /usr/share/cmake-3.16/Modules/Internal/CMakeCheckCompilerFlag.cmake /workspaces/emsdk/upstream/emscripten/cmake/Modules/CMakeSystemSpecificInformation.cmake /workspaces/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake CMakeCache.txt CMakeFiles/3.16.3/CMakeCCompiler.cmake CMakeFiles/3.16.3/CMakeCXXCompiler.cmake CMakeFiles/3.16.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt /home/codespace/emsdk/upstream/emscripten/cmake/Modules/CMakeSystemSpecificInformation.cmake /home/codespace/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake /usr/share/cmake-3.16/Modules/CMakeCInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake-3.16/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.16/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.16/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.16/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.16/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.16/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang.cmake /usr/share/cmake-3.16/Modules/Compiler/GNU.cmake /usr/share/cmake-3.16/Modules/Internal/CMakeCheckCompilerFlag.cmake CMakeCache.txt CMakeFiles/3.16.3/CMakeCCompiler.cmake CMakeFiles/3.16.3/CMakeCXXCompiler.cmake CMakeFiles/3.16.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt /usr/share/cmake-3.16/Modules/CMakeCInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake-3.16/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.16/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.16/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.16/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.16/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.16/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang.cmake /usr/share/cmake-3.16/Modules/Compiler/GNU.cmake /usr/share/cmake-3.16/Modules/Internal/CMakeCheckCompilerFlag.cmake /workspaces/emsdk/upstream/emscripten/cmake/Modules/CMakeSystemSpecificInformation.cmake /workspaces/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake CMakeCache.txt CMakeFiles/3.16.3/CMakeCCompiler.cmake CMakeFiles/3.16.3/CMakeCXXCompiler.cmake CMakeFiles/3.16.3/CMakeSystem.cmake: phony
+build ../CMakeLists.txt /home/codespace/emsdk/upstream/emscripten/cmake/Modules/CMakeSystemSpecificInformation.cmake /home/codespace/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake /usr/share/cmake-3.16/Modules/CMakeCInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.16/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake-3.16/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.16/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.16/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.16/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.16/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.16/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.16/Modules/Compiler/Clang.cmake /usr/share/cmake-3.16/Modules/Compiler/GNU.cmake /usr/share/cmake-3.16/Modules/Internal/CMakeCheckCompilerFlag.cmake CMakeCache.txt CMakeFiles/3.16.3/CMakeCCompiler.cmake CMakeFiles/3.16.3/CMakeCXXCompiler.cmake CMakeFiles/3.16.3/CMakeSystem.cmake: phony
 
 
 #############################################

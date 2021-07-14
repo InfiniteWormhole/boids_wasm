@@ -1,4 +1,4 @@
-set(CMAKE_C_COMPILER "/workspaces/emsdk/upstream/emscripten/emcc")
+set(CMAKE_C_COMPILER "/home/codespace/emsdk/upstream/emscripten/emcc")
 set(CMAKE_C_COMPILER_ARG1 "")
 set(CMAKE_C_COMPILER_ID "Clang")
 set(CMAKE_C_COMPILER_VERSION "13.0.0")
@@ -17,10 +17,10 @@ set(CMAKE_C_SIMULATE_VERSION "")
 
 
 
-set(CMAKE_AR "/workspaces/emsdk/upstream/emscripten/emar")
-set(CMAKE_C_COMPILER_AR "/workspaces/emsdk/upstream/emscripten/emar")
-set(CMAKE_RANLIB "/workspaces/emsdk/upstream/emscripten/emranlib")
-set(CMAKE_C_COMPILER_RANLIB "/workspaces/emsdk/upstream/emscripten/emranlib")
+set(CMAKE_AR "/home/codespace/emsdk/upstream/emscripten/emar")
+set(CMAKE_C_COMPILER_AR "/home/codespace/emsdk/upstream/emscripten/emar")
+set(CMAKE_RANLIB "/home/codespace/emsdk/upstream/emscripten/emranlib")
+set(CMAKE_C_COMPILER_RANLIB "/home/codespace/emsdk/upstream/emscripten/emranlib")
 set(CMAKE_LINKER "/usr/bin/ld")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCC )

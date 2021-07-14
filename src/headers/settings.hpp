@@ -5,9 +5,7 @@
 #include "../../lib/include/json.hpp"
 
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(v2d,
-x,
-y)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(v2d, x, y)
 
 struct Settings
 {

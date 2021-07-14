@@ -40,6 +40,10 @@ public:
     int index;
     v2d pos;
     v2d vel;
+   	// TODO Add spatial subdivision
+	// int subdivColumn;
+	// int subdivRow;
+    // static constexpr int cell_size = 10;
 private:
     v2d acc;
     v2d aln;
